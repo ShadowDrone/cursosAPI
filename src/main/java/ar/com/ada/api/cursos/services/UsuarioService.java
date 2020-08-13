@@ -92,7 +92,7 @@ public class UsuarioService {
     }
 
     //Aca enviamos email.
-    emailService.SendEmail(usuario.getEmail(), "Curso Pinturillo: Registracion exitossa!!!", "Hola "+ usuario.getUsername() + ", bienvenida al sistema de cursos");
+    emailService.SendEmail(usuario.getEmail(), "Curso Pinturillo: Registracion exitossa!", "Hola "+ usuario.getUsername() + ", bienvenida al sistema de cursos");
 
     return usuario;
 
