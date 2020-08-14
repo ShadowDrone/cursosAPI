@@ -11,6 +11,7 @@ import ar.com.ada.api.cursos.entities.Curso;
 import ar.com.ada.api.cursos.entities.Docente;
 import ar.com.ada.api.cursos.entities.Estudiante;
 import ar.com.ada.api.cursos.repos.CursoRepository;
+import ar.com.ada.api.cursos.sistema.comm.EmailService;
 
 @Service
 public class CursoService {
@@ -21,6 +22,9 @@ public class CursoService {
     CategoriaService categoriaService;
     @Autowired
     DocenteService docenteService;
+
+    @Autowired
+    EmailService emailService;
 
     // 21/07 21:39 Hernán dijo que algo vamos a tener que cambiar en el resultado
     public boolean crearCurso(Curso curso) {
@@ -126,12 +130,18 @@ public class CursoService {
 
         // Asigno al docente usando el metodo asignarDocente
         // Que habiamos creado para la relacion bidireccional
-        curso.asignarDocente(docenteService.buscarPorId(docenteId));
+        Docente docente = docenteService.buscarPorId(docenteId);
+        curso.asignarDocente(docente);
 
         // Actualizo el curso en la base de datos
         // dejo que el repositorio haga su magia(y cruzamos los dedos)
         cursoRepository.save(curso);
 
+        if (docente.getUsuario() != null) {
+
+            emailService.SendEmail(docente.getUsuario().getEmail(), "Curso Pinturillo: Asignación exitosa!!!",
+                    "Hola " + docente.getNombre() + ", Se te ha asignado el curso exitosamente");
+        }
         return true;
 
     }
