@@ -30,7 +30,7 @@ public class CategoriaController {
 
         GenericResponse r = new GenericResponse();
         r.isOk = true;
-        r.message = "Categoría creada con éxito";
+        r.message = "Categoria Creada con exito";
         r.id = categoria.getCategoriaId();
 
         // Aca vamos a usar Ok
