@@ -23,6 +23,11 @@ public class EstudianteService {
     @Autowired
     CursoService cursoService;
 
+    @Autowired
+     EmailService emailService;
+
+
+
     public boolean crearEstudiante(Estudiante estudiante) {
 
         if (estudianteRepo.existsEstudiante(estudiante.getPaisId(), estudiante.getTipoDocumentoId().getValue(),
@@ -97,6 +102,8 @@ public class EstudianteService {
         curso.asignarEstudiante(estudiante);
 
         estudianteRepo.save(estudiante);
+         emailService.SendEmail(usuario.getEmail(), "Curso Pinturillo: Inscripcion exitosa bienvenido", + usuario.getUsername() + ", bienvenida al sistema de cursos");
+
         return inscripcion;
     }
 
